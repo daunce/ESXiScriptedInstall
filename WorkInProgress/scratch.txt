@@ -17,10 +17,18 @@ print MAC
 #mystring="this is a test"
 #print mystring.split()[2]
 
+i=123
+print type(i)
+x="mystring"
+print type(x)
+
+print type(MAC)
+
 with open('ListOfHosts.csv', 'rb') as f:
         reader = csv.reader(f)
         for row in reader:
-                print "MAC" + row[1]
+                print MAC + row[1]
+                print type(row[1])
                 if MAC == row[1]:
                         print "MATCHED"
                         print row[0]
