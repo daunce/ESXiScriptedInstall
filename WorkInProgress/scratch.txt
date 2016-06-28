@@ -1,3 +1,4 @@
+cat << EOF > scratch.py
 #!/usr/bin/python
 import os, commands, csv, subprocess
 
@@ -6,39 +7,24 @@ MAC=subprocess.check_output("esxcli network ip interface list |grep MAC | awk '{
 # MAC=os.system("esxcli network ip interface list |grep MAC | awk '{print $3}'")
 os.system("wget -O ListOfHosts.csv http://192.168.10.3/ListOfHosts.csv")
 
-print "Hardware MAC is "
-print MAC
-#print "ALL INT details "
-#MACLINE=os.system("esxcli network ip interface list |grep MAC")
-#MACLINE2=str(MACLINE)
-#print MACLINE2
-# print MACLINE.split(" ")[3]
+MACADDR = MAC.split()
 
-#mystring="this is a test"
-#print mystring.split()[2]
-
-i=123
-print type(i)
-x="mystring"
-print type(x)
-
-print type(MAC)
+print "MAC = " + MAC
+#print "MACADDR = " + MACADDR
+print "MACADDR[2] = " + MACADDR[2]
 
 with open('ListOfHosts.csv', 'rb') as f:
         reader = csv.reader(f)
         for row in reader:
-                print MAC + row[1]
-                print type(row[1])
-                if MAC == row[1]:
-                        print "MATCHED"
-                        print row[0]
+                print row
+                if MACADDR[2] == row[1]:
+                        print "MATCHED + row[0]"
+                        #print row[0]
                         #os.system("esxcli system hostname set --fqdn=" + row[1])
                         os.system("esxcli system hostname set --fqdn=" + row[0])
-print "End"
+print "End of loop"
 print "Hostname is: "
 os.system("esxcli system hostname get")
 
-#print "Here is the MACLINE"
-#print MACLINE
-
-print MAC
+print MACADDR
+EOF
